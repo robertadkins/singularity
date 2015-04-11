@@ -1,0 +1,8 @@
+
+
+
+def adjustments(input_str, speeches):
+
+
+    for word in input_str.split(" "):
+        speeches_with_word = [speeches[key] for key in speeches.keys().filter(

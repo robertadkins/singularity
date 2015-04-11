@@ -13,7 +13,7 @@ AUDIO_FILENAME = 'audio.mp3'
 
 @app.route('/text/<stt>')
 def save_to_file(stt):
-	linesM = get_lines("../AI/macbeth.txt", "MACBETH")
+	linesM = get_lines("AI/macbeth.txt", "MACBETH")
 	markovM = gen_markov(linesM.values())
 
 	t = generate(stt, markovM, linesM)

@@ -14,7 +14,7 @@ def save_to_file(stt):
 	print t
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0')
+	app.run(host='10.122.1.106', port=33334)
 
 def adjustments(input_str, speeches):
 	simple_words = ["i", "a", "an", "and", "the", "then", "it"]
@@ -133,11 +133,3 @@ def generate(input_str, markov, lines):
 			rand_val -= value
 			
 	return output_str
-
-linesM = get_lines("macbeth.txt", "MACBETH")
-markovM = gen_markov(linesM.values())
-
-test = generate("oh hi there", markovM, linesM)
-
-with open("Output.txt", "w") as text_file:
-    text_file.write(test)

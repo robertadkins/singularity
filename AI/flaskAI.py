@@ -2,11 +2,13 @@ import json
 import re
 import random
 import urllib2
-import pyglet
 import os
 
 from flask import Flask
 app = Flask(__name__)
+
+BASE_URL = 'http://tts-api.com/tts.mp3?q='
+AUDIO_FILENAME = 'audio.mp3'
 
 @app.route('/text/<stt>')
 def save_to_file(stt):
@@ -15,9 +17,8 @@ def save_to_file(stt):
 
 	t = generate(stt, markovM, linesM)
 	get_audio(t)
+        return open(AUDIO_FILENAME, 'rb').read()
 
-if __name__ == '__main__':
-	app.run(host='10.122.1.106', port=33334)
 
 def adjustments(input_str, speeches):
 	simple_words = ["i", "a", "an", "and", "the", "then", "it"]
@@ -149,19 +150,9 @@ def get_audio(text):
 	audio_file.flush()
 	audio_file.close()
 
-''' Play audio that was already requested and saved '''
-def play_audio():
-	audio = pyglet.resource.media(AUDIO_FILENAME)
-	audio.play()
-	pyglet.clock.schedule_once(exiter, audio.duration)
-	pyglet.app.run()
 
-''' Stops pyglet from hanging after sound has played '''
-def exiter(dt):
-	pyglet.app.exit()
-
-#BASE_URL = 'http://tts-api.com/tts.mp3?q='
-#AUDIO_FILENAME = 'audio.mp3'
+if __name__ == '__main__':
+	app.run(host='10.122.1.22', port=33334, debug=True)
 
 #pyglet.resource.path = [os.getcwd()]
 #pyglet.resource.reindex()

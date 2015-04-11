@@ -1,0 +1,5 @@
+import python.re
+import python.os
+
+open "macbeth.txt" as macbeth
+for line in macbeth

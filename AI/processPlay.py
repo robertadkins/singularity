@@ -21,7 +21,13 @@ with open("macbeth.txt") as playFile:
         prev_line = re.search(prev_line_re, line).group(1)
         current_line = re.search(current_line_re, line).group(1)
         #print "inout\t\t" + prev_line + "\t" + current_line + "\t\t\t\t"+str(tolerance)+"\n"
-        print current_line
+
+        clean_line = ""
+        for word in prev_line.split(" "):
+            clean_line += re.search(r'[A-Za-z\']*', word).group(0).lower() + " "
+
+        print clean_line
+            #        print current_line
     #print "inout\t\tAnything!\t%s\t\t\t\t0\n" % failed_message
    # print macbeth
     

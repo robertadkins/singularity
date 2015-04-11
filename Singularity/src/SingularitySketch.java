@@ -22,8 +22,9 @@ public class SingularitySketch extends PApplet {
 	float prevX;
 	float prevY;
 
-	PShape s;
+	PShape[] heads;
 	PShape eye;
+	int counter;
 	
 	float headAngleX = 15 * PI / 8;
 	float headAngleY = 0;
@@ -33,7 +34,15 @@ public class SingularitySketch extends PApplet {
 
 	public void setup() {
 		size(1200, 900, P3D);
-		s = loadShape("my_model.obj");
+		heads = new PShape[5];
+		heads[0] = loadShape("my_model.obj");
+		heads[1] = loadShape("eee.obj");
+		heads[2] = loadShape("erh.obj");
+		heads[3] = loadShape("oh.obj");
+		//heads[4] = loadShape("short_i.obj");
+		heads[4] = loadShape("ychj.obj");
+		counter = 0;
+		
 		eye = loadShape("my_eye.obj");
 
 		targetX = 0.5f;
@@ -77,7 +86,8 @@ public class SingularitySketch extends PApplet {
 		rotateX(headAngleX);
 		rotateY(headAngleY);
 		rotateZ(PI);
-		shape(s);
+		shape(heads[(counter / 20) % heads.length]);
+		counter++;
 		
 		dx = prevX - targetX;
 		if (abs(dx) > 0.001) {

@@ -4,15 +4,16 @@ import random
 import urllib2
 import os
 
-from flask import Flask
-app = Flask(__name__)
+from FlaskWebProject import app
+#from flask import Flask
+#app = Flask(__name__)
 
 BASE_URL = 'http://tts-api.com/tts.mp3?q='
 AUDIO_FILENAME = 'audio.mp3'
 
 @app.route('/text/<stt>')
 def save_to_file(stt):
-	linesM = get_lines("macbeth.txt", "MACBETH")
+	linesM = get_lines("../AI/macbeth.txt", "MACBETH")
 	markovM = gen_markov(linesM.values())
 
 	t = generate(stt, markovM, linesM)
@@ -152,7 +153,7 @@ def get_audio(text):
 
 
 if __name__ == '__main__':
-	app.run(host='10.122.1.22', port=33334, debug=True)
+	app.run(port=33334)#, debug=True)
 
 #pyglet.resource.path = [os.getcwd()]
 #pyglet.resource.reindex()

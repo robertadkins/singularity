@@ -8,6 +8,8 @@ AUDIO_FILENAME = 'audio.mp3'
 pyglet.resource.path = [os.getcwd()]
 pyglet.resource.reindex()
 
+print os.getcwd()
+
 text = raw_input()
 formatted_text = urllib2.quote(text)
 
@@ -20,3 +22,4 @@ audio_file.close()
 
 audio = pyglet.resource.media(AUDIO_FILENAME)
 audio.play()
+pyglet.app.run()

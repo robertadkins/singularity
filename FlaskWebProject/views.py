@@ -1,21 +1,14 @@
 import json
 import re
 import random
+import urllib2
+import os
 
-from datetime import datetime
-from flask import render_template
-from FlaskWebProject import app
+from flask import Flask
+app = Flask(__name__)
 
-@app.route('/')
-@app.route('/home')
-def home():
-    """Renders the home page."""
-    return render_template(
-        'index.html',
-        title='Home Page',
-        year=datetime.now().year,
-    )
-
+BASE_URL = 'http://tts-api.com/tts.mp3?q='
+AUDIO_FILENAME = 'audio.mp3'
 
 @app.route('/text/<stt>')
 def save_to_file(stt):
@@ -23,10 +16,9 @@ def save_to_file(stt):
 	markovM = gen_markov(linesM.values())
 
 	t = generate(stt, markovM, linesM)
-	print t
+	get_audio(t)
+        return open(AUDIO_FILENAME, 'rb').read()
 
-if __name__ == '__main__':
-	app.run(host='10.122.1.106', port=33334)
 
 def adjustments(input_str, speeches):
 	simple_words = ["i", "a", "an", "and", "the", "then", "it"]
@@ -145,3 +137,30 @@ def generate(input_str, markov, lines):
 			rand_val -= value
 			
 	return output_str
+
+''' Request audio from text. Save to file '''
+def get_audio(text):
+	formatted_text = urllib2.quote(text)
+
+	audio_url = urllib2.urlopen(BASE_URL + formatted_text).geturl()
+	audio_data = urllib2.urlopen(audio_url).read()
+
+	audio_file = open(AUDIO_FILENAME, 'w')
+	audio_file.write(audio_data)
+	audio_file.flush()
+	audio_file.close()
+
+
+if __name__ == '__main__':
+	app.run(host='10.122.1.22', port=33334, debug=True)
+
+#pyglet.resource.path = [os.getcwd()]
+#pyglet.resource.reindex()
+
+#linesM = get_lines("macbeth.txt", "MACBETH")
+#markovM = gen_markov(linesM.values())
+
+#t = generate("good evening", markovM, linesM)
+#with open("Output.txt", "w") as text_file:
+#	text_file.write(t)
+#get_audio(t)

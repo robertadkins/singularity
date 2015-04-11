@@ -1,1 +1,29 @@
 Audio/audio.mp3
+Singularity/*.pydevproject
+Singularity/.metadata
+Singularity/.gradle
+Singularity/bin/
+Singularity/tmp/
+Singularity/*.tmp
+Singularity/*.bak
+Singularity/*.swp
+Singularity/*~.nib
+Singularity/local.properties
+Singularity/.settings/
+Singularity/.loadpath
+Singularity/# Eclipse Core
+Singularity/.project
+# External tool builders
+Singularity/.externalToolBuilders/
+# Locally stored "Eclipse launch configurations"
+Singularity/*.launch
+# CDT-specific
+Singularity/.cproject
+# JDT-specific (Eclipse Java Development Tools)
+Singularity/.classpath
+# PDT-specific
+Singularity/.buildpath
+# sbteclipse plugin
+Singularity/.target
+# TeXlipse plugin
+Singularity/.texlipse

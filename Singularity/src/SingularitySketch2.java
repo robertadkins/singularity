@@ -11,7 +11,7 @@ import processing.core.*;
 import de.voidplus.leapmotion.*;
 
 
-public class SingularitySketch extends PApplet {
+public class SingularitySketch2 extends PApplet {
 	private static final long serialVersionUID = 5131702049942670416L;
 
 	private CascadeClassifier face_cascade;

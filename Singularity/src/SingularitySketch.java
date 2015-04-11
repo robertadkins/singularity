@@ -14,8 +14,6 @@ public class SingularitySketch extends PApplet {
 	private CascadeClassifier face_cascade;
 
 	private float DAMP = 0.6f;
-	//private float HEAD_ANGLE_RANGE = PI / 8;
-	//private float EYE_ANGLE_RANGE = PI / 5;
 	private float HEAD_ANGLE_RANGE = PI / 8;
 	private float EYE_ANGLE_RANGE = PI / 5;
 

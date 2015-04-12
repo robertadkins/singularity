@@ -2,22 +2,26 @@ import json
 import re
 import random
 
+
 def adjustments(input_str, speeches):
+    simple_words = ["i", "a", "an", "and", "the", "then", "it"]
+
     appearances = {}
 
     for word_dirty in input_str.split(" "):
         word = re.search(r'[A-Za-z\']*', word_dirty).group(0)
+        if word not in simple_words:
+        
+            speeches_with_word = dict([(key, value) for key, value in speeches.iteritems() if word in key or word in value])
+            
+            for key, speech in speeches_with_word.iteritems():
+                for speech_word_dirty in speech.split(" "):
+                    speech_word = re.search(r'[A-Za-z\']*', speech_word_dirty).group(0).lower()
 
-        speeches_with_word = dict([(key, value) for key, value in speeches.iteritems() if word in key or word in value])
-
-        for key, speech in speeches_with_word.iteritems():
-            for speech_word_dirty in speech.split(" "):
-                speech_word = re.search(r'[A-Za-z\']*', speech_word_dirty).group(0).lower()
-
-                if not speech_word in appearances:
-                    appearances[speech_word] = 1
-                else:
-                    appearances[speech_word] += 1
+                    if not speech_word in appearances:
+                        appearances[speech_word] = 1
+                    else:
+                        appearances[speech_word] += 1
     return appearances
 
 def get_lines(filename, char_name):
@@ -29,12 +33,21 @@ def get_lines(filename, char_name):
         
         play = playFile.read()
         # Macbeth
-        """
-        play = re.sub(r'\n([A-Za-z]*)\n\n',r'\1\t', play)
-        play = re.sub(r'(.*)\n    (.*)',r'\1 \2', play)
-        """
+        if char_name == "MACBETH":
+            play = re.sub(r'\n([A-Za-z]*)\n\n',r'\1\t', play)
+            play = re.sub(r'(.*)\n    (.*)',r'\1 \2', play)
+            play = re.sub(r'\[Aside\]', '', play)
 
-        play = re.sub(r'\n([A-Z]+)\n    ', r'\n\1\t', play)
+        # Godot
+        if char_name == "ESTRAGON":
+            play = re.sub(r'\n([A-Z]+)\n    ', r'\n\1\t', play)
+            play = re.sub(r'\((.*)\).?', r'', play)
+            play = re.sub(r' \. \. \.', '...', play)
+	
+	# 12AM
+	if char_name == "EIGHT":
+	    play = re.sub(r'\n([A-Z]+).*\. ', r'\n\1\t', play)        
+
 
 #        print play
         character_lines = re.findall(re.compile('[A-Za-z]*\t[^\n\t]*\n%s\t[^\n\t]*' % character_name), play)
@@ -89,8 +102,8 @@ def generate(input_str, markov, lines):
 
     next_word = "_start"
     output_str = ""
-
-    while next_word[-1:] != "." and next_word[-1:] != "?":
+    
+    while next_word[-1:] != "." and next_word[-1:] != "?" and next_word[-1:] != "!":
         max_rand = 0
 
         possibilities = markov[next_word].copy()
@@ -99,7 +112,7 @@ def generate(input_str, markov, lines):
             if clean_key in adj:
                 possibilities[key] += adj[clean_key]
             else:
-                possibilities[key] /= 10.0
+                possibilities[key] /= 100.0
             max_rand += possibilities[key]
 
         rand_val = random.random()*max_rand
@@ -113,15 +126,23 @@ def generate(input_str, markov, lines):
             
     return output_str
 
-"""
-lines = get_lines("macbeth.txt", "MACBETH")
-markov = gen_markov(lines.values())
 
-"""
-lines = get_lines("godot.txt", "ESTRAGON")
-#print lines
-markov = gen_markov(lines.values())
+linesM = get_lines("macbeth.txt", "MACBETH")
+markovM = gen_markov(linesM.values())
+
+
+linesG = get_lines("godot.txt", "ESTRAGON")
+markovG = gen_markov(linesG.values())
+
+linesT = get_lines("12AM.txt", "EIGHT")
+markovT = gen_markov(linesT.values())
+
+t = generate(raw_input("> "), markovT, linesT)
+print t
 
 while True:
     s = raw_input("> ")
-    print generate(s, markov, lines)
+    #t =generate(t, markovM, linesM)
+    #print t
+    t = generate(s, markovT, linesT)
+    print t

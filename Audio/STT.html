@@ -14,7 +14,7 @@
                         my_text.setAttribute('id', 'my_text');
                         my_text.innerHTML = input;
                         document.getElementById('trans').appendChild(my_text);
-                        var host = "http://127.0.0.1:5555/text/0/" + encodeURIComponent(input);
+                        var host = "http://127.0.0.1:5555/text/" + document.getElementById('voice').value + "/" + encodeURIComponent(input);
                         var xmlhttp = new XMLHttpRequest();
                         xmlhttp.onreadystatechange = function() {
                             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -43,7 +43,8 @@
     <body>
         <h1><center> <img src="singularity-logo.gif" alt="Singularity"></center></h1>
         
-        Ask Something: <button type="button" onclick="start()">RECORD</button><br><br>
+        Ask Something: <button type="button" onclick="start()">RECORD</button>
+        <input id="voice" type="text" value="0" style="margin-left:57px"></input><br><br>
         <div id='trans'>      
         </div>
     </body>

@@ -1,3 +1,11 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
@@ -7,6 +15,8 @@ import org.opencv.objdetect.CascadeClassifier;
 
 import processing.core.PApplet;
 import processing.core.PShape;
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
 
 public class SingularitySketch extends PApplet {
 	private static final long serialVersionUID = 5131702049942670416L;
@@ -17,18 +27,25 @@ public class SingularitySketch extends PApplet {
 	private float HEAD_ANGLE_RANGE = PI / 8;
 	private float EYE_ANGLE_RANGE = PI / 5;
 
+	Minim minim;
+	AudioPlayer player;
+
+	int MAX_FILE_SIZE = 2048;
+
 	float targetX;
 	float targetY;
 	float prevX;
 	float prevY;
 
+	byte[] audio;
+
 	PShape[] heads;
 	PShape eye;
 	int counter;
-	
+
 	float headAngleX = 15 * PI / 8;
 	float headAngleY = 0;
-	
+
 	float eyeAngleX = PI / 70;
 	float eyeAngleY = 0;
 
@@ -39,16 +56,20 @@ public class SingularitySketch extends PApplet {
 		heads[1] = loadShape("eee.obj");
 		heads[2] = loadShape("erh.obj");
 		heads[3] = loadShape("oh.obj");
-		//heads[4] = loadShape("short_i.obj");
+		// heads[4] = loadShape("short_i.obj");
 		heads[4] = loadShape("ychj.obj");
 		counter = 0;
-		
+
 		eye = loadShape("my_eye.obj");
 
 		targetX = 0.5f;
 		targetY = 0.5f;
 		prevX = 0.5f;
 		prevY = 0.5f;
+
+		audio = new byte[MAX_FILE_SIZE];
+
+		minim = new Minim(this);
 
 		System.loadLibrary("opencv_java2411");
 		face_cascade = new CascadeClassifier(
@@ -59,48 +80,51 @@ public class SingularitySketch extends PApplet {
 		} else {
 			System.out.println("Face classifier loooaaaaaded up");
 		}
+		
 		Thread spiderman = new Thread(new Processor());
 		spiderman.start();
+		Thread musakBox = new Thread(new AudioRetriever());
+		musakBox.start();
 	}
 
 	public void draw() {
 		background(0x000000);
 		lights();
-		//directionalLight(50,255,50,0,-1,0);
+		// directionalLight(50,255,50,0,-1,0);
 		pushMatrix();
 		translate(width / 2, height / 2, 0);
 		scale(3.0f);
-		
+
 		float dx = prevX - targetX;
 		if (abs(dx) > 0.001) {
 			headAngleY += dx * DAMP * HEAD_ANGLE_RANGE;
 			prevX -= dx * DAMP;
 		}
-		
+
 		float dy = prevY - targetY;
 		if (abs(dy) > 0.001) {
 			headAngleX += dy * DAMP * HEAD_ANGLE_RANGE;
 			prevY -= dy * DAMP;
 		}
-		
+
 		rotateX(headAngleX);
 		rotateY(headAngleY);
 		rotateZ(PI);
-		shape(heads[(counter / 20) % heads.length]);
+		shape(heads[(counter / 10) % heads.length]);
 		counter++;
-		
+
 		dx = prevX - targetX;
 		if (abs(dx) > 0.001) {
 			eyeAngleY += dx * DAMP * EYE_ANGLE_RANGE;
 			prevX -= dx * DAMP;
 		}
-		
+
 		dy = prevY - targetY;
 		if (abs(dy) > 0.001) {
 			eyeAngleX += dy * DAMP * EYE_ANGLE_RANGE;
 			prevY -= dy * DAMP;
-		} 
-		
+		}
+
 		pushMatrix();
 		translate(-36, 36.5f, 28);
 		rotateY(-eyeAngleY);
@@ -108,14 +132,14 @@ public class SingularitySketch extends PApplet {
 		scale(22.5f);
 		shape(eye);
 		popMatrix();
-		
+
 		translate(36, 36.5f, 28);
 		rotateY(-eyeAngleY);
 		rotateX(-eyeAngleX);
 		scale(22.5f);
 		shape(eye);
 		camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
-		
+
 		popMatrix();
 	}
 
@@ -146,12 +170,12 @@ public class SingularitySketch extends PApplet {
 					best = rect;
 				}
 			}
-			
+
 			if (best != null && maxArea > 15000) {
 				targetX = (float) (best.x / inputframe.size().width);
 				targetY = (float) (best.y / inputframe.size().height);
 			}
-			
+
 			return mRgba;
 		}
 
@@ -170,6 +194,68 @@ public class SingularitySketch extends PApplet {
 						break;
 					}
 				}
+			}
+		}
+	}
+
+	class AudioRetriever implements Runnable {
+
+		ServerSocket server;
+		BufferedInputStream in;
+
+		AudioRetriever() {
+			try {
+				server = new ServerSocket(33333);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					System.out.println("Listening...");
+					Socket snake = server.accept();
+					System.out.println("IP: " + snake.getInetAddress());
+					System.out.println("Port: " + snake.getLocalPort());
+					System.out.println("Connected!");
+					
+					File out = new File("data/audio.mp3");
+					
+					if (!out.exists()) {
+						out.createNewFile();
+					}
+					
+					BufferedInputStream in = new BufferedInputStream(snake.getInputStream());
+					
+					byte[] data = new byte[4096];
+					int read = 0;
+					BufferedOutputStream toFile = new BufferedOutputStream(new FileOutputStream(out));
+					while ((read = in.read(data)) != -1) {
+						toFile.write(data, 0, read);
+						toFile.flush();
+					}
+					toFile.close();
+					
+					/*AudioInputStream audStream = AudioSystem.getAudioInputStream(snake.getInputStream());
+					AudioSystem.write(audStream, AudioFileFormat.Type.WAVE, out);
+					audStream.close();*/
+					player = minim.loadFile("data/audio.wav");
+					player.play();
+
+				} catch (IOException e) {
+					System.out.println("crap");
+					e.printStackTrace();
+					break;
+				}
+			}
+			try {
+				server.close();
+			} catch (IOException e) {
+				System.out
+						.println("You couldn't even close? What kind of a Socket are you?");
 			}
 		}
 	}

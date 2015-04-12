@@ -21,5 +21,11 @@
 	<classpathentry kind="lib" path="library/opencv-2411.jar"/>
 	<classpathentry kind="lib" path="leap_processing/LeapJava.jar"/>
 	<classpathentry kind="lib" path="leap_processing/LeapMotionForProcessing.jar"/>
+	<classpathentry kind="lib" path="library/jl1.0.jar"/>
+	<classpathentry kind="lib" path="library/jsminim.jar"/>
+	<classpathentry kind="lib" path="library/minim.jar"/>
+	<classpathentry kind="lib" path="library/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="library/tritonus_aos.jar"/>
+	<classpathentry kind="lib" path="library/tritonus_share.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

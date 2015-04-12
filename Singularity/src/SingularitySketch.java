@@ -147,11 +147,9 @@ public class SingularitySketch extends PApplet {
 		stroke(255,100,255);
 		boolean first = true;
 		for (Hand hand : leap.getHands ()) {
-			System.out.println("HANDY!");
 			pushMatrix();
 		    PVector hand_position = hand.getPosition();
 			translate(-width/2,-height/2,-600-2*hand_position.z);
-		    System.out.println("position: "+hand_position);
 			hand.draw(false);
 		    popMatrix();
 //			hand.drawSphere();

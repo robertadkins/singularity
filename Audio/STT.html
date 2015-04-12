@@ -14,7 +14,7 @@
                         my_text.setAttribute('id', 'my_text');
                         my_text.innerHTML = input;
                         document.getElementById('trans').appendChild(my_text);
-                        var host = "http://127.0.0.1:5555/text/" + encodeURIComponent(input);
+                        var host = "http://127.0.0.1:5555/text/0/" + encodeURIComponent(input);
                         var xmlhttp = new XMLHttpRequest();
                         xmlhttp.onreadystatechange = function() {
                             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {

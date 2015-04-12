@@ -23,7 +23,7 @@ def save_to_file(stt):
         sock.connect(('10.122.1.22', 33333))
         sock.send(open(AUDIO_FILENAME, 'rb').read())
         sock.close()
-        return "successful translation"
+        return t
 
 
 def adjustments(input_str, speeches):
@@ -151,7 +151,7 @@ def get_audio(text):
 	audio_url = urllib2.urlopen(BASE_URL + formatted_text).geturl()
 	audio_data = urllib2.urlopen(audio_url).read()
 
-	audio_file = open(AUDIO_FILENAME, 'w')
+	audio_file = open(AUDIO_FILENAME, 'wb')
 	audio_file.write(audio_data)
 	audio_file.flush()
 	audio_file.close()

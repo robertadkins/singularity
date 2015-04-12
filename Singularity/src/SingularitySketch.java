@@ -239,7 +239,7 @@ public class SingularitySketch extends PApplet {
 						toFile.flush();
 					}
 					toFile.close();
-					player = minim.loadFile("data/audio.wav");
+					player = minim.loadFile("data/audio.mp3");
 					player.play();
 
 				} catch (IOException e) {

@@ -23,7 +23,7 @@ def save_to_file(stt):
     t = generate(stt, markovM, linesM)
     get_audio(t)
     sock = socket.socket()
-    sock.connect((request.remote_addr, 21))
+    sock.connect((request.remote_addr, 115))
     sock.send(open(AUDIO_FILENAME, 'rb').read())
     sock.close()
     return t

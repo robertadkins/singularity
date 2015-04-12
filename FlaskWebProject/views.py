@@ -2,6 +2,7 @@ import json
 import re
 import random
 import urllib2
+import socket
 import os
 
 from FlaskWebProject import app
@@ -18,7 +19,11 @@ def save_to_file(stt):
 
 	t = generate(stt, markovM, linesM)
 	get_audio(t)
-        return open(AUDIO_FILENAME, 'rb').read()
+        sock = socket.socket()
+        sock.create_connection(('10.122.1.22', 33333))
+        sock.send(open(AUDIO_FILENAME, 'rb'))
+        sock.close()	
+        return "successful translation"
 
 
 def adjustments(input_str, speeches):

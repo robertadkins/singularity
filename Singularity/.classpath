@@ -18,7 +18,11 @@
 	<classpathentry kind="lib" path="library/jogl-all-natives-windows-i586.jar"/>
 	<classpathentry kind="lib" path="library/jogl-all.jar"/>
 	<classpathentry kind="lib" path="leap_processing/LeapJava.jar"/>
-	<classpathentry kind="lib" path="leap_processing/LeapMotionForProcessing.jar"/>
+	<classpathentry kind="lib" path="leap_processing/LeapMotionForProcessing.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Singularity/leap_processing/windows64"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="library/jl1.0.jar"/>
 	<classpathentry kind="lib" path="library/jsminim.jar"/>
 	<classpathentry kind="lib" path="library/minim.jar"/>

@@ -16,9 +16,11 @@ import org.opencv.objdetect.CascadeClassifier;
 
 import processing.core.PApplet;
 import processing.core.PShape;
+import processing.core.PVector;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import edu.ufl.digitalworlds.j4k.*;
+import de.voidplus.leapmotion.*;
 
 
 public class SingularitySketch extends PApplet {
@@ -52,11 +54,17 @@ public class SingularitySketch extends PApplet {
 
 	float headAngleX = 15 * PI / 8;
 	float headAngleY = 0;
+	float headAngleYAdj = 0;
 
 	float eyeAngleX = PI / 70;
 	float eyeAngleY = 0;
 	
 	PKinect myKinect;
+	LeapMotion leap;
+	PVector prevHandPosition;
+	boolean switched = false;
+	
+	int personality = 0;
 
 	public void setup() {		
 		size(1200, 900, P3D);
@@ -73,6 +81,7 @@ public class SingularitySketch extends PApplet {
 		isPuzzled = false;
 
 		setupKinect();
+		leap = new LeapMotion(this);
 
 		eye = loadShape("my_eye.obj");
 
@@ -108,17 +117,60 @@ public class SingularitySketch extends PApplet {
 			shouldSpeak = false;
 		}
 		
-		background(0x000000);
-//		lights();
-		directionalLight(50,255,50,0,-1,0);
+		
+		
+//		background(0x000000);
+		background(255);
+		
+
+		
+		//Leap motion hands
+		pushMatrix();
+//		scale(.1f);
+		
+		strokeWeight(20);
+		stroke(255,0,0);
+		boolean first = true;
+		for (Hand hand : leap.getHands ()) {
+			System.out.println("HANDY!");
+			pushMatrix();
+		    PVector hand_position = hand.getPosition();
+			translate(0,0,300-2*hand_position.z);
+		    System.out.println("position: "+hand_position);
+			hand.draw(false);
+		    popMatrix();
+//			hand.drawSphere();
+		    
+		    if(first) {
+		    	if(prevHandPosition != null) {
+		    		headAngleYAdj += (hand_position.x - prevHandPosition.x)/50.0f;
+		    		if (!switched && abs(headAngleYAdj) > PI) {
+		    			switched = true;
+		    			personality++;		//Switch AI personality!
+		    		}
+		    	}
+		    	prevHandPosition = hand_position;
+		    }
+		    first = false;
+		}
+		if (leap.getHands().size() == 0)
+			switched = false;
+		popMatrix();
+		
+		lights();
+//		directionalLight(50,255,50,0,-1,0);
 		
 		drawKinect();
 
-		resetMatrix();
-		translate(0,0,-2);
-		
 		pushMatrix();
-		scale(0.005f);
+		
+		if (myKinect == null) {
+			translate(width / 2, height / 2, 0);
+			scale(3.0f);
+		}
+		
+
+		headAngleYAdj -= headAngleYAdj * .1;
 
 		float dx = prevX - targetX;
 		if (abs(dx) > 0.001) {
@@ -133,7 +185,7 @@ public class SingularitySketch extends PApplet {
 		}
 
 		rotateX(headAngleX);
-		rotateY(headAngleY);
+		rotateY(headAngleY + headAngleYAdj);
 		rotateZ(PI);
 		if (shouldSpeak) {
 			shape(heads[(counter / 2) % heads.length]);
@@ -215,6 +267,11 @@ public class SingularitySketch extends PApplet {
 			//or draw lower resolution depthmap like that:
 //			int skip=1;
 //			map.draw(skip);
+			
+
+			resetMatrix();
+			translate(0,0,-2);
+			scale(0.005f);
 
 		}
 	}

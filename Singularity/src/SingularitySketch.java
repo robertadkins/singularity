@@ -124,27 +124,33 @@ public class SingularitySketch extends PApplet {
 		}
 
 		background(0x000000);
-		lights();
-		// directionalLight(50,255,50,0,-1,0);
+//		lights();
+		directionalLight(50,255,50,0,-1,0);
 		
-		
-		
-		background(255);
-		
+//		float fov = PI/3;
+//		float cameraZ = (height/2.0f) / tan(fov/2.0f);
+//		perspective(fov, (float)(width)/(height), (float)(cameraZ/10.0), (float)(cameraZ*10.0));
+//		printMatrix();
 
-		
+//		pushMatrix();
+		drawKinect();
+//		popMatrix();
+//		  translate(0,0,-2);
+//		  rotateX(this.radians((float)(mouseY*1f/height-0.5)*180));
+//		  rotateY(this.radians((float)(mouseX*1f/width-0.5)*180));
+//		  translate(0,0,2);
 		//Leap motion hands
+
+//		translate(0,0,-600);
 		pushMatrix();
-//		scale(.1f);
-		
 		strokeWeight(20);
-		stroke(255,0,0);
+		stroke(255,100,255);
 		boolean first = true;
 		for (Hand hand : leap.getHands ()) {
 			System.out.println("HANDY!");
 			pushMatrix();
 		    PVector hand_position = hand.getPosition();
-			translate(0,0,300-2*hand_position.z);
+			translate(-width/2,-height/2,-600-2*hand_position.z);
 		    System.out.println("position: "+hand_position);
 			hand.draw(false);
 		    popMatrix();
@@ -166,7 +172,7 @@ public class SingularitySketch extends PApplet {
 			switched = false;
 		popMatrix();
 		
-		drawKinect();
+
 		pushMatrix();
 		
 		if (myKinect == null) {
@@ -263,7 +269,10 @@ public class SingularitySketch extends PApplet {
 
 			// Draw the depth map
 			PDepthMap map = myKinect.getPDepthMap();
-
+//			  translate(0,0,-2);
+//			  rotateX(this.radians((float)(mouseY*1f/height-0.5)*180));
+//			  rotateY(this.radians((float)(mouseX*1f/width-0.5)*180));
+//			  translate(0,0,2);
 			noStroke();
 			map.draw();
 

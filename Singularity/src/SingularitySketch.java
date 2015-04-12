@@ -28,6 +28,7 @@ public class SingularitySketch extends PApplet {
 	private float EYE_ANGLE_RANGE = PI / 5;
 	
 	boolean shouldSpeak;
+	boolean isPuzzled;
 
 	Minim minim;
 	AudioPlayer player;
@@ -42,6 +43,7 @@ public class SingularitySketch extends PApplet {
 	byte[] audio;
 
 	PShape[] heads;
+	PShape puzzleHead;
 	PShape eye;
 	int counter;
 
@@ -58,10 +60,12 @@ public class SingularitySketch extends PApplet {
 		heads[1] = loadShape("eee.obj");
 		heads[2] = loadShape("erh.obj");
 		heads[3] = loadShape("oh.obj");
+		puzzleHead = loadShape("puzzled.obj");
 		// heads[4] = loadShape("short_i.obj");
 		//heads[4] = loadShape("ychj.obj");
 		counter = 0;
 		shouldSpeak = false;
+		isPuzzled = false;
 
 		eye = loadShape("my_eye.obj");
 
@@ -88,6 +92,8 @@ public class SingularitySketch extends PApplet {
 		spiderman.start();
 		Thread musakBox = new Thread(new AudioRetriever());
 		musakBox.start();
+		Thread cucumber = new Thread(new FacialNotifier());
+		cucumber.start();
 	}
 
 	public void draw() {
@@ -97,7 +103,7 @@ public class SingularitySketch extends PApplet {
 		
 		background(0x000000);
 		lights();
-		// directionalLight(50,255,50,0,-1,0);
+		//directionalLight(50,255,50,0,-1,0);
 		pushMatrix();
 		translate(width / 2, height / 2, 0);
 		scale(3.0f);
@@ -121,7 +127,11 @@ public class SingularitySketch extends PApplet {
 			shape(heads[(counter / 2) % heads.length]);
 			counter++;
 		} else {
-			shape(heads[0]);
+			if (!isPuzzled) {
+				shape(heads[0]);
+			} else {
+				shape(puzzleHead);
+			}
 		}
 
 		dx = prevX - targetX;
@@ -138,6 +148,9 @@ public class SingularitySketch extends PApplet {
 
 		pushMatrix();
 		translate(-36, 36.5f, 28);
+		if (isPuzzled) {
+			rotateX(-PI/8);
+		}
 		rotateY(-eyeAngleY);
 		rotateX(-eyeAngleX);
 		scale(22.5f);
@@ -145,6 +158,9 @@ public class SingularitySketch extends PApplet {
 		popMatrix();
 
 		translate(36, 36.5f, 28);
+		if (isPuzzled) {
+			rotateX(-PI/8);
+		}
 		rotateY(-eyeAngleY);
 		rotateX(-eyeAngleX);
 		scale(22.5f);
@@ -209,6 +225,32 @@ public class SingularitySketch extends PApplet {
 		}
 	}
 
+	class FacialNotifier implements Runnable {
+		ServerSocket server;
+
+		FacialNotifier() {
+			try {
+				server = new ServerSocket(5556);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					server.accept();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				isPuzzled = true;
+			}
+		}
+	}
+	
 	class AudioRetriever implements Runnable {
 
 		ServerSocket server;
@@ -245,13 +287,13 @@ public class SingularitySketch extends PApplet {
 					int read = 0;
 					BufferedOutputStream toFile = new BufferedOutputStream(new FileOutputStream(out));
 					while ((read = in.read(data)) != -1) {
-						System.out.println("DATA: " + data);
 						toFile.write(data, 0, read);
 						toFile.flush();
 					}
 					toFile.close();
 					player = minim.loadFile("data/audio.mp3");
 					player.play();
+					isPuzzled = false;
 					shouldSpeak = true;
 
 				} catch (IOException e) {

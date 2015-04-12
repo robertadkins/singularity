@@ -3,7 +3,9 @@
     <head>
         <title>Singularity</title>
         <script type="text/javascript">
-            var recognition = new webkitSpeechRecognition({continuous:true});
+            var recognition = new webkitSpeechRecognition();
+            //recognition.continuous = true;
+            //recognition.interimResults = true;
             recognition.onresult = function(event) {
                 for (var i=0; i < event.results.length; i++) {
                     console.log(event.results[i][0].transcript);
@@ -15,6 +17,11 @@
                     var host = "http://127.0.0.1:5555/text/" + encodeURIComponent(input);
                     
                     var xmlhttp = new XMLHttpRequest();
+                    
+                    var faceHost = "http://127.0.0.1:5556";
+                    var otherReq = new XMLHttpRequest();
+                    otherReq.open("GET",faceHost,true);
+                    otherReq.send(null);
                     
                     xmlhttp.open("GET",host,true);
                     xmlhttp.send(null);

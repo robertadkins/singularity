@@ -51,7 +51,7 @@ public class SingularitySketch extends PApplet {
 	float eyeAngleX = PI / 70;
 	float eyeAngleY = 0;
 
-	public void setup() {
+	public void setup() {		
 		size(1200, 900, P3D);
 		heads = new PShape[4];
 		heads[0] = loadShape("my_model.obj");
@@ -69,7 +69,7 @@ public class SingularitySketch extends PApplet {
 		targetY = 0.5f;
 		prevX = 0.5f;
 		prevY = 0.5f;
-
+		player = null;
 		audio = new byte[MAX_FILE_SIZE];
 
 		minim = new Minim(this);
@@ -91,6 +91,10 @@ public class SingularitySketch extends PApplet {
 	}
 
 	public void draw() {
+		if (player != null && !player.isPlaying()) {
+			shouldSpeak = false;
+		}
+		
 		background(0x000000);
 		lights();
 		// directionalLight(50,255,50,0,-1,0);
@@ -113,8 +117,12 @@ public class SingularitySketch extends PApplet {
 		rotateX(headAngleX);
 		rotateY(headAngleY);
 		rotateZ(PI);
-		shape(heads[(counter / 2) % heads.length]);
-		counter++;
+		if (shouldSpeak) {
+			shape(heads[(counter / 2) % heads.length]);
+			counter++;
+		} else {
+			shape(heads[0]);
+		}
 
 		dx = prevX - targetX;
 		if (abs(dx) > 0.001) {
@@ -208,7 +216,7 @@ public class SingularitySketch extends PApplet {
 
 		AudioRetriever() {
 			try {
-				server = new ServerSocket(21);
+				server = new ServerSocket(80);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -244,6 +252,7 @@ public class SingularitySketch extends PApplet {
 					toFile.close();
 					player = minim.loadFile("data/audio.mp3");
 					player.play();
+					shouldSpeak = true;
 
 				} catch (IOException e) {
 					System.out.println("crap");

@@ -3,7 +3,7 @@
     <head>
         <title>Singularity</title>
         <script type="text/javascript">
-            var recognition = new webkitSpeechRecognition();
+            var recognition = new webkitSpeechRecognition({continuous:true});
             recognition.onresult = function(event) {
                 for (var i=0; i < event.results.length; i++) {
                     console.log(event.results[i][0].transcript);
@@ -12,7 +12,7 @@
                     var input = event.results[0][0].transcript;
                     document.getElementById("recognition_result").innerHTML = event.results[0][0].transcript;
                     
-                    var host = "singularitee.azurewebsites.net/text/" + input;
+                    var host = "http://127.0.0.1:5555/text/" + encodeURIComponent(input);
                     
                     var xmlhttp = new XMLHttpRequest();
                     

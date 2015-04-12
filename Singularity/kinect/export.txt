@@ -1,0 +1,2 @@
+application.windows32=j4k.jar,ufdw.jar,ufdw_j4k_32bit.dll,ufdw_j4k2_32bit.dll
+application.windows64=j4k.jar,ufdw.jar,ufdw_j4k_64bit.dll,ufdw_j4k2_64bit.dll

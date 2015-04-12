@@ -1,0 +1,57 @@
+# Blender MTL File: 'new head.blend'
+# Material Count: 5
+newmtl Texture2.001_ModelsFace_skin_hi.jpg
+Ns 17.647059
+Ka 0.000000 0.000000 0.000000
+Kd 0.560000 0.560000 0.560000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ModelsFace_skin_hi.jpg
+
+
+newmtl Texture3.001_ModelsFace_sock.jpg
+Ns 17.647059
+Ka 0.000000 0.000000 0.000000
+Kd 0.560000 0.560000 0.560000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ModelsFace_sock.jpg
+
+
+newmtl Texture4.001_ModelsFace_teethLower.jpg
+Ns 17.647059
+Ka 0.000000 0.000000 0.000000
+Kd 0.560000 0.560000 0.560000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ModelsFace_teethLower.jpg
+
+
+newmtl Texture5.001_ModelsFace_teethUpper.jpg
+Ns 17.647059
+Ka 0.000000 0.000000 0.000000
+Kd 0.560000 0.560000 0.560000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ModelsFace_teethUpper.jpg
+
+
+newmtl Texture6.001_ModelsFace_tongue.jpg
+Ns 17.647059
+Ka 0.000000 0.000000 0.000000
+Kd 0.560000 0.560000 0.560000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ModelsFace_tongue.jpg
+
+

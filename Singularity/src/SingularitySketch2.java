@@ -88,7 +88,9 @@ public class SingularitySketch2 extends PApplet {
 	         0  , 1  , 0    );
 	  popMatrix();
 	  
-	  translate(0,0,40);
+//	  translate(0,0,40);
+	  strokeWeight(40);
+	  stroke(255,0,0);
 	  for (Hand hand : leap.getHands ()) {
 		  hand.draw();
 	  }

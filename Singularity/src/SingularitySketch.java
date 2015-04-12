@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
@@ -16,8 +17,13 @@ import org.opencv.objdetect.CascadeClassifier;
 
 import processing.core.PApplet;
 import processing.core.PShape;
+import processing.core.PVector;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
+import de.voidplus.leapmotion.Hand;
+import de.voidplus.leapmotion.LeapMotion;
+import edu.ufl.digitalworlds.j4k.PDepthMap;
+import edu.ufl.digitalworlds.j4k.PKinect;
 
 public class SingularitySketch extends PApplet {
 	private static final long serialVersionUID = 5131702049942670416L;
@@ -50,9 +56,17 @@ public class SingularitySketch extends PApplet {
 
 	float headAngleX = 15 * PI / 8;
 	float headAngleY = 0;
+	float headAngleYAdj = 0;
 
 	float eyeAngleX = PI / 70;
 	float eyeAngleY = 0;
+
+	PKinect myKinect;
+	LeapMotion leap;
+	PVector prevHandPosition;
+	boolean switched = false;
+
+	int personality = 0;
 
 	Thread spiderman;
 	Thread musakBox;
@@ -72,6 +86,9 @@ public class SingularitySketch extends PApplet {
 		shouldSpeak = false;
 		isPuzzled = false;
 
+		setupKinect();
+		leap = new LeapMotion(this);
+
 		eye = loadShape("my_eye.obj");
 
 		targetX = 0.5f;
@@ -83,7 +100,7 @@ public class SingularitySketch extends PApplet {
 
 		minim = new Minim(this);
 
-		System.loadLibrary("opencv_java2411");
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		face_cascade = new CascadeClassifier(
 				"data/haarcascade_frontalface_default.xml");
 		if (face_cascade.empty()) {
@@ -104,17 +121,61 @@ public class SingularitySketch extends PApplet {
 	public void draw() {
 		if (player != null && !player.isPlaying()) {
 			shouldSpeak = false;
-//			synchronized (cucumber) {
-//				cucumber.notifyAll();
-//			}
 		}
 
 		background(0x000000);
 		lights();
 		// directionalLight(50,255,50,0,-1,0);
+		
+		
+		
+		background(255);
+		
+
+		
+		//Leap motion hands
 		pushMatrix();
-		translate(width / 2, height / 2, 0);
-		scale(3.0f);
+//		scale(.1f);
+		
+		strokeWeight(20);
+		stroke(255,0,0);
+		boolean first = true;
+		for (Hand hand : leap.getHands ()) {
+			System.out.println("HANDY!");
+			pushMatrix();
+		    PVector hand_position = hand.getPosition();
+			translate(0,0,300-2*hand_position.z);
+		    System.out.println("position: "+hand_position);
+			hand.draw(false);
+		    popMatrix();
+//			hand.drawSphere();
+		    
+		    if(first) {
+		    	if(prevHandPosition != null) {
+		    		headAngleYAdj += (hand_position.x - prevHandPosition.x)/50.0f;
+		    		if (!switched && abs(headAngleYAdj) > PI) {
+		    			switched = true;
+		    			personality++;		//Switch AI personality!
+		    		}
+		    	}
+		    	prevHandPosition = hand_position;
+		    }
+		    first = false;
+		}
+		if (leap.getHands().size() == 0)
+			switched = false;
+		popMatrix();
+		
+		drawKinect();
+		pushMatrix();
+		
+		if (myKinect == null) {
+			translate(width / 2, height / 2, 0);
+			scale(3.0f);
+		}
+		
+
+		headAngleYAdj -= headAngleYAdj * .1;
 
 		float dx = prevX - targetX;
 		if (abs(dx) > 0.001) {
@@ -129,7 +190,7 @@ public class SingularitySketch extends PApplet {
 		}
 
 		rotateX(headAngleX);
-		rotateY(headAngleY);
+		rotateY(headAngleY + headAngleYAdj);
 		rotateZ(PI);
 		if (shouldSpeak) {
 			shape(heads[(counter / 2) % heads.length]);
@@ -173,9 +234,48 @@ public class SingularitySketch extends PApplet {
 		rotateX(-eyeAngleX);
 		scale(22.5f);
 		shape(eye);
-		camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
 
 		popMatrix();
+	}
+
+	public void setupKinect() {
+		try {
+			myKinect = new PKinect(this);
+			if (!myKinect.start(PKinect.XYZ)) {
+				println("ERROR: The Kinect device could not be initialized.");
+				println("1. Check if the Microsoft's Kinect SDK was succesfully installed on this computer.");
+				println("2. Check if the Kinect is plugged into a power outlet.");
+				println("3. Check if the Kinect is connected to a USB port of this computer.");
+				myKinect = null;
+			}
+		} catch (Exception e) {
+			myKinect = null;
+			e.printStackTrace();
+			System.out.println("No kinect worky");
+		}
+	}
+
+	public void drawKinect() {
+		if (myKinect != null) {
+			myKinect.setFrustum();
+			translate(0, 0, -.5f);
+			scale(4);
+
+			// Draw the depth map
+			PDepthMap map = myKinect.getPDepthMap();
+
+			noStroke();
+			map.draw();
+
+			// or draw lower resolution depthmap like that:
+			// int skip=1;
+			// map.draw(skip);
+
+			resetMatrix();
+			translate(0, 0, -2);
+			scale(0.005f);
+
+		}
 	}
 
 	class Processor implements Runnable {
@@ -224,8 +324,8 @@ public class SingularitySketch extends PApplet {
 						webcam_image = detect(webcam_image);
 						// -- 4. Display the ie
 					} else {
-						System.out.println(" --(!) No captured frame -- Break!");
-						break;
+						System.out
+								.println(" --(!) No captured frame -- Break!");
 					}
 				}
 			}
@@ -237,7 +337,6 @@ public class SingularitySketch extends PApplet {
 		DataOutputStream out;
 
 		FacialNotifier() {
-			System.out.println("hey bby");
 			try {
 				server = new ServerSocket(80);
 			} catch (IOException e) {
@@ -250,7 +349,6 @@ public class SingularitySketch extends PApplet {
 		public void run() {
 			while (true) {
 				Socket sock = null;
-				System.out.println("Will you accept me?");
 				try {
 					sock = server.accept();
 				} catch (IOException e) {
@@ -258,24 +356,13 @@ public class SingularitySketch extends PApplet {
 					e.printStackTrace();
 				}
 				isPuzzled = true;
-				System.out.println("puzzled is true");
 				try {
-					/*synchronized (this) {
-						wait();
-					}*/
-//					while(shouldSpeak) {Thread.sleep(200);System.out.print("hi");};
-					System.out.println("Got here!");
 					if (sock != null) {
-						out = new DataOutputStream(sock.getOutputStream());
-						out.writeBytes("HTTP/1.1 200 OK\r\n");
-						out.flush();
-						out.close();
-						System.out.println(sock);
 						sock.close();
 					} else {
 						System.out.println("Sock is null!");
 					}
-				} catch (/*InterruptedException |*/ IOException e) {
+				} catch (/* InterruptedException | */IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -335,7 +422,8 @@ public class SingularitySketch extends PApplet {
 			try {
 				server.close();
 			} catch (IOException e) {
-				System.out.println("You couldn't even close? What kind of a Socket are you?");
+				System.out
+						.println("You couldn't even close? What kind of a Socket are you?");
 			}
 		}
 	}

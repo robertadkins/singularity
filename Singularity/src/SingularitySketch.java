@@ -1,5 +1,6 @@
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class SingularitySketch extends PApplet {
 	private float DAMP = 0.6f;
 	private float HEAD_ANGLE_RANGE = PI / 8;
 	private float EYE_ANGLE_RANGE = PI / 5;
-	
+
 	boolean shouldSpeak;
 	boolean isPuzzled;
 
@@ -53,7 +54,11 @@ public class SingularitySketch extends PApplet {
 	float eyeAngleX = PI / 70;
 	float eyeAngleY = 0;
 
-	public void setup() {		
+	Thread spiderman;
+	Thread musakBox;
+	Thread cucumber;
+
+	public void setup() {
 		size(1200, 900, P3D);
 		heads = new PShape[4];
 		heads[0] = loadShape("my_model.obj");
@@ -62,7 +67,7 @@ public class SingularitySketch extends PApplet {
 		heads[3] = loadShape("oh.obj");
 		puzzleHead = loadShape("puzzled.obj");
 		// heads[4] = loadShape("short_i.obj");
-		//heads[4] = loadShape("ychj.obj");
+		// heads[4] = loadShape("ychj.obj");
 		counter = 0;
 		shouldSpeak = false;
 		isPuzzled = false;
@@ -87,23 +92,26 @@ public class SingularitySketch extends PApplet {
 		} else {
 			System.out.println("Face classifier loooaaaaaded up");
 		}
-		
-		Thread spiderman = new Thread(new Processor());
+
+		spiderman = new Thread(new Processor());
 		spiderman.start();
-		Thread musakBox = new Thread(new AudioRetriever());
+		musakBox = new Thread(new AudioRetriever());
 		musakBox.start();
-		Thread cucumber = new Thread(new FacialNotifier());
+		cucumber = new Thread(new FacialNotifier());
 		cucumber.start();
 	}
 
 	public void draw() {
 		if (player != null && !player.isPlaying()) {
 			shouldSpeak = false;
+//			synchronized (cucumber) {
+//				cucumber.notifyAll();
+//			}
 		}
-		
+
 		background(0x000000);
 		lights();
-		//directionalLight(50,255,50,0,-1,0);
+		// directionalLight(50,255,50,0,-1,0);
 		pushMatrix();
 		translate(width / 2, height / 2, 0);
 		scale(3.0f);
@@ -149,7 +157,7 @@ public class SingularitySketch extends PApplet {
 		pushMatrix();
 		translate(-36, 36.5f, 28);
 		if (isPuzzled) {
-			rotateX(-PI/8);
+			rotateX(-PI / 8);
 		}
 		rotateY(-eyeAngleY);
 		rotateX(-eyeAngleX);
@@ -159,7 +167,7 @@ public class SingularitySketch extends PApplet {
 
 		translate(36, 36.5f, 28);
 		if (isPuzzled) {
-			rotateX(-PI/8);
+			rotateX(-PI / 8);
 		}
 		rotateY(-eyeAngleY);
 		rotateX(-eyeAngleX);
@@ -216,8 +224,7 @@ public class SingularitySketch extends PApplet {
 						webcam_image = detect(webcam_image);
 						// -- 4. Display the ie
 					} else {
-						System.out
-								.println(" --(!) No captured frame -- Break!");
+						System.out.println(" --(!) No captured frame -- Break!");
 						break;
 					}
 				}
@@ -227,30 +234,55 @@ public class SingularitySketch extends PApplet {
 
 	class FacialNotifier implements Runnable {
 		ServerSocket server;
+		DataOutputStream out;
 
 		FacialNotifier() {
+			System.out.println("hey bby");
 			try {
-				server = new ServerSocket(5556);
+				server = new ServerSocket(80);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
 		@Override
 		public void run() {
 			while (true) {
+				Socket sock = null;
+				System.out.println("Will you accept me?");
 				try {
-					server.accept();
+					sock = server.accept();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				isPuzzled = true;
+				System.out.println("puzzled is true");
+				try {
+					/*synchronized (this) {
+						wait();
+					}*/
+//					while(shouldSpeak) {Thread.sleep(200);System.out.print("hi");};
+					System.out.println("Got here!");
+					if (sock != null) {
+						out = new DataOutputStream(sock.getOutputStream());
+						out.writeBytes("HTTP/1.1 200 OK\r\n");
+						out.flush();
+						out.close();
+						System.out.println(sock);
+						sock.close();
+					} else {
+						System.out.println("Sock is null!");
+					}
+				} catch (/*InterruptedException |*/ IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
-	
+
 	class AudioRetriever implements Runnable {
 
 		ServerSocket server;
@@ -269,23 +301,21 @@ public class SingularitySketch extends PApplet {
 		public void run() {
 			while (true) {
 				try {
-					System.out.println("Listening...");
 					Socket snake = server.accept();
-					System.out.println("IP: " + snake.getInetAddress());
-					System.out.println("Port: " + snake.getLocalPort());
 					System.out.println("Connected!");
-					
 					File out = new File("data/audio.mp3");
-					
+
 					if (!out.exists()) {
 						out.createNewFile();
 					}
-					
-					BufferedInputStream in = new BufferedInputStream(snake.getInputStream());
-					
+
+					BufferedInputStream in = new BufferedInputStream(
+							snake.getInputStream());
+
 					byte[] data = new byte[4096];
 					int read = 0;
-					BufferedOutputStream toFile = new BufferedOutputStream(new FileOutputStream(out));
+					BufferedOutputStream toFile = new BufferedOutputStream(
+							new FileOutputStream(out));
 					while ((read = in.read(data)) != -1) {
 						toFile.write(data, 0, read);
 						toFile.flush();
@@ -305,8 +335,7 @@ public class SingularitySketch extends PApplet {
 			try {
 				server.close();
 			} catch (IOException e) {
-				System.out
-						.println("You couldn't even close? What kind of a Socket are you?");
+				System.out.println("You couldn't even close? What kind of a Socket are you?");
 			}
 		}
 	}

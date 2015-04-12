@@ -7,6 +7,7 @@ import os
 import sys
 
 from flask import request
+from flask.ext.cors import CORS, cross_origin
 
 from FlaskWebProject import app
 #from flask import Flask
@@ -15,7 +16,8 @@ from FlaskWebProject import app
 BASE_URL = 'http://tts-api.com/tts.mp3?q='
 AUDIO_FILENAME = 'audio.mp3'
 
-@app.route('/text/<stt>')
+@app.route('/text/<stt>', methods=['POST', 'GET'])
+@cross_origin()
 def save_to_file(stt):
     linesM = get_lines("AI/macbeth.txt", "MACBETH")
     markovM = gen_markov(linesM.values())

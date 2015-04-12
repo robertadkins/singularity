@@ -43,8 +43,25 @@ def get_lines(filename, char_name):
             play = re.sub(r'\n([A-Z]+)\n    ', r'\n\1\t', play)
             play = re.sub(r'\((.*)\).?', r'', play)
             play = re.sub(r' \. \. \.', '...', play)
+	
+	# 12AM
+	if char_name == "EIGHT":
+	    play = re.sub(r'\n([A-Z]+).*\. ', r'\n\1\t', play)        
+            play = re.sub(r'\(.*\)', '', play)
         
+        # Doll house
+        if char_name == "Nora":
+	    play = re.sub(r'\n\n([A-Z][a-z]+).*\. ', r'\n\1\t', play)        
+            play = re.sub(r'\[.*\]', '', play)
 #        print play
+
+        # Big love
+        if char_name == "LYDIA":
+            play = re.sub(r'\n([A-Z]+)\n', r'\n\1\t', play)
+            play = re.sub(r'\[.*\]', '', play)
+            play = re.sub(r'\n\n', r'\n', play)
+            play = re.sub(r'\n([A-Z]?[^A-Z][^\n]*)', r' \1', play)
+
         character_lines = re.findall(re.compile('[A-Za-z]*\t[^\n\t]*\n%s\t[^\n\t]*' % character_name), play)
 
         prev_line_re = re.compile('([^\t\n]*)\n%s' % character_name)
@@ -98,7 +115,7 @@ def generate(input_str, markov, lines):
     next_word = "_start"
     output_str = ""
     
-    while next_word[-1:] != "." and next_word[-1:] != "?" and next_word[-1:] != "!":
+    while next_word not in markov["_end"]:
         max_rand = 0
 
         possibilities = markov[next_word].copy()
@@ -129,12 +146,31 @@ markovM = gen_markov(linesM.values())
 linesG = get_lines("godot.txt", "ESTRAGON")
 markovG = gen_markov(linesG.values())
 
-t = generate(raw_input("> "), markovG, linesG)
-print t
+linesT = get_lines("12AM.txt", "EIGHT")
+markovT = gen_markov(linesT.values())
+
+linesD = get_lines("dollhouse.txt", "Nora")
+markovD = gen_markov(linesD.values())
+
+linesB = get_lines("biglove.txt", "LYDIA")
+markovB = gen_markov(linesB.values())
+
+#t = generate(raw_input("> "), markovT, linesT)
+#print t
+
+#print linesB.values()
+
+linesUltimate = linesM.copy()
+linesUltimate.update(linesG)
+linesUltimate.update(linesT)
+linesUltimate.update(linesD)
+linesUltimate.update(linesB)
+
+markovUltimate = gen_markov(linesUltimate.values())
 
 while True:
     s = raw_input("> ")
-    t =generate(t, markovM, linesM)
-    print t
-    t = generate(t, markovG, linesG)
+    #t =generate(t, markovM, linesM)
+    #print t
+    t = generate(s, markovUltimate, linesUltimate)
     print t

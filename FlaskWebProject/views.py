@@ -16,13 +16,17 @@ from FlaskWebProject import app
 BASE_URL = 'http://tts-api.com/tts.mp3?q='
 AUDIO_FILENAME = 'audio.mp3'
 
-@app.route('/text/<stt>', methods=['POST', 'GET'])
+@app.route('/text/<p>/<stt>', methods=['POST', 'GET'])
 @cross_origin()
-def save_to_file(stt):
-    linesM = get_lines("AI/macbeth.txt", "MACBETH")
-    markovM = gen_markov(linesM.values())
+def save_to_file(p, stt):
+    files = ["AI/macbeth.txt", "AI/godot.txt", "AI/12AM.txt", "AI/dollhouse.txt", "AI/biglove.txt"]
+    characters = ["MACBETH", "ESTRAGON", "EIGHT", "Nora", "LYDIA"]
+    
+    lines = get_lines(files[p], characters[p])
 
-    t = generate(stt, markovM, linesM)
+    markov = gen_markov(lines.values())
+
+    t = generate(stt, markov, lines)
     get_audio(t)
     sock = socket.socket()
     sock.connect((request.remote_addr, 33333))
@@ -72,7 +76,24 @@ def get_lines(filename, char_name):
 			play = re.sub(r'\((.*)\).?', r'', play)
 			play = re.sub(r' \. \. \.', '...', play)
 		
-#        print play
+		# 12AM
+		if char_name == "EIGHT":
+	    	play = re.sub(r'\n([A-Z]+).*\. ', r'\n\1\t', play)        
+            	play = re.sub(r'\(.*\)', '', play)
+        
+ 	        # Doll house
+        	if char_name == "Nora":
+	    	play = re.sub(r'\n\n([A-Z][a-z]+).*\. ', r'\n\1\t', play)        
+            	play = re.sub(r'\[.*\]', '', play)
+
+
+	        # Big love
+        	if char_name == "LYDIA":
+            	play = re.sub(r'\n([A-Z]+)\n', r'\n\1\t', play)
+            	play = re.sub(r'\[.*\]', '', play)
+            	play = re.sub(r'\n\n', r'\n', play)
+            	play = re.sub(r'\n([A-Z]?[^A-Z][^\n]*)', r' \1', play)
+
 		character_lines = re.findall(re.compile('[A-Za-z]*\t[^\n\t]*\n%s\t[^\n\t]*' % character_name), play)
 
 		prev_line_re = re.compile('([^\t\n]*)\n%s' % character_name)
@@ -126,7 +147,7 @@ def generate(input_str, markov, lines):
 	next_word = "_start"
 	output_str = ""
 	
-	while next_word[-1:] != "." and next_word[-1:] != "?" and next_word[-1:] != "!":
+	while next_word not in markov["_end"]:
 		max_rand = 0
 
 		possibilities = markov[next_word].copy()

@@ -4,6 +4,7 @@ import random
 import urllib2
 import socket
 import os
+import sys
 
 from FlaskWebProject import app
 #from flask import Flask
@@ -14,16 +15,17 @@ AUDIO_FILENAME = 'audio.mp3'
 
 @app.route('/text/<stt>')
 def save_to_file(stt):
-	linesM = get_lines("AI/macbeth.txt", "MACBETH")
-	markovM = gen_markov(linesM.values())
+    linesM = get_lines("AI/macbeth.txt", "MACBETH")
+    markovM = gen_markov(linesM.values())
 
-	t = generate(stt, markovM, linesM)
-	get_audio(t)
-        sock = socket.socket()
-        sock.connect(('10.122.1.22', 33333))
-        sock.send(open(AUDIO_FILENAME, 'rb').read())
-        sock.close()
-        return t
+    t = generate(stt, markovM, linesM)
+    get_audio(t)
+    sock = socket.socket()
+    return t
+    sock.connect(('10.122.1.22', 33333))
+    sock.send(open(AUDIO_FILENAME, 'rb').read())
+    sock.close()
+    return t
 
 
 def adjustments(input_str, speeches):

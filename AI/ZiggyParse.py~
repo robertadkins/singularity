@@ -1,0 +1,4 @@
+
+
+with open("crime_incidents_2013_CSV.csv") as csv:
+    

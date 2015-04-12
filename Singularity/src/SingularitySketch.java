@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Rect;
@@ -17,6 +18,8 @@ import processing.core.PApplet;
 import processing.core.PShape;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
+import edu.ufl.digitalworlds.j4k.*;
+
 
 public class SingularitySketch extends PApplet {
 	private static final long serialVersionUID = 5131702049942670416L;
@@ -50,6 +53,8 @@ public class SingularitySketch extends PApplet {
 
 	float eyeAngleX = PI / 70;
 	float eyeAngleY = 0;
+	
+	PKinect myKinect;
 
 	public void setup() {		
 		size(1200, 900, P3D);
@@ -62,6 +67,8 @@ public class SingularitySketch extends PApplet {
 		//heads[4] = loadShape("ychj.obj");
 		counter = 0;
 		shouldSpeak = false;
+		
+		setupKinect();
 
 		eye = loadShape("my_eye.obj");
 
@@ -74,7 +81,7 @@ public class SingularitySketch extends PApplet {
 
 		minim = new Minim(this);
 
-		System.loadLibrary("opencv_java2411");
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		face_cascade = new CascadeClassifier(
 				"data/haarcascade_frontalface_default.xml");
 		if (face_cascade.empty()) {
@@ -96,11 +103,22 @@ public class SingularitySketch extends PApplet {
 		}
 		
 		background(0x000000);
-		lights();
-		// directionalLight(50,255,50,0,-1,0);
+//		lights();
+		 directionalLight(50,255,50,0,-1,0);
+		
+//		pushMatrix();
+//		scale(0.2f);
+		drawKinect();
+//		popMatrix();
+//		camera(0, 0, -1000, 0, 0, 0, 0, -1, 0);
+		
 		pushMatrix();
-		translate(width / 2, height / 2, 0);
-		scale(3.0f);
+//		translate(width / 2, height / 2, 0);
+//		scale(3.0f);
+		scale(0.005f);
+//		translate(0,0,-4);
+//		translate(-20,20,0);
+//		rotateY(PI/2);
 
 		float dx = prevX - targetX;
 		if (abs(dx) > 0.001) {
@@ -149,9 +167,60 @@ public class SingularitySketch extends PApplet {
 		rotateX(-eyeAngleX);
 		scale(22.5f);
 		shape(eye);
-		camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
 
 		popMatrix();
+	}
+	
+	public void setupKinect() {
+		try {
+			myKinect=new PKinect(this);
+			if(!myKinect.start(PKinect.XYZ)) {
+				println("ERROR: The Kinect device could not be initialized.");
+				println("1. Check if the Microsoft's Kinect SDK was succesfully installed on this computer.");
+				println("2. Check if the Kinect is plugged into a power outlet.");
+				println("3. Check if the Kinect is connected to a USB port of this computer.");   
+				myKinect = null;
+			} 
+		} catch(Exception e) {
+			myKinect = null;
+			e.printStackTrace();
+			System.out.println("No kinect worky");
+		}
+	}
+	
+	public void drawKinect() {
+		if(myKinect != null) {
+			myKinect.setFrustum();
+			translate(0,0,-.5f);
+			scale(4);
+//			myKinect.drawFOV();
+//			camera(0, 0, 1000, 0, 0, 0, 0, 1, 0);
+			//Simple rotation of the 3D scene using the mouse
+//			translate(0,0,-2);
+//			rotateX(this.radians((float)(mouseY*1f/height-0.5)*180));
+//			rotateY(this.radians((float)(mouseX*1f/width-0.5)*180)); 	
+//			translate(0,0,2);
+ 
+			//Draw the depth map
+			PDepthMap map=myKinect.getPDepthMap();
+//			lights();
+//					  directionalLight(50,255,50,0,-1,0);
+
+			noStroke();
+			map.draw();
+
+			resetMatrix();
+			translate(0,0,-2);
+
+			
+			//or draw lower resolution depthmap like that:
+//			int skip=1;
+//			shape(heads[0]);
+
+//			map.draw(skip);
+//			shape(heads[0]);
+
+		}
 	}
 
 	class Processor implements Runnable {
@@ -202,7 +271,7 @@ public class SingularitySketch extends PApplet {
 					} else {
 						System.out
 								.println(" --(!) No captured frame -- Break!");
-						break;
+//						break;
 					}
 				}
 			}

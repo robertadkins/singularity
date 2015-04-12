@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="library/core.jar"/>
 	<classpathentry kind="lib" path="library/gluegen-rt-natives-linux-amd64.jar"/>
@@ -18,7 +17,6 @@
 	<classpathentry kind="lib" path="library/jogl-all-natives-windows-amd64.jar"/>
 	<classpathentry kind="lib" path="library/jogl-all-natives-windows-i586.jar"/>
 	<classpathentry kind="lib" path="library/jogl-all.jar"/>
-	<classpathentry kind="lib" path="library/opencv-2411.jar"/>
 	<classpathentry kind="lib" path="leap_processing/LeapJava.jar"/>
 	<classpathentry kind="lib" path="leap_processing/LeapMotionForProcessing.jar"/>
 	<classpathentry kind="lib" path="library/jl1.0.jar"/>
@@ -27,5 +25,16 @@
 	<classpathentry kind="lib" path="library/mp3spi1.9.4.jar"/>
 	<classpathentry kind="lib" path="library/tritonus_aos.jar"/>
 	<classpathentry kind="lib" path="library/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="kinect/j4k.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Singularity/kinect/windows64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="kinect/ufdw.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Singularity/kinect/windows64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV-2.4.9"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

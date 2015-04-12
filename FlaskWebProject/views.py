@@ -22,7 +22,7 @@ def save_to_file(stt):
     get_audio(t)
     sock = socket.socket()
     return t
-    sock.connect(('10.122.1.22', 33333))
+    sock.connect(('10.122.1.22', 21))
     sock.send(open(AUDIO_FILENAME, 'rb').read())
     sock.close()
     return t

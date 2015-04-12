@@ -208,7 +208,7 @@ public class SingularitySketch extends PApplet {
 
 		AudioRetriever() {
 			try {
-				server = new ServerSocket(33333);
+				server = new ServerSocket(21);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

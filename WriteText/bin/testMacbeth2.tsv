@@ -1,0 +1,130 @@
+Type	Label	Description	Text	If	Learn	Goto	Accuracy	Mode
+output start	out_start		Hello		mode=none		
+Type	Label	Description	Text	If	Learn	Goto	Accuracy	Mode
+output start	out_start		Hello		mode=none		
+inout		How far is't call'd to Forres? What are these So wither'd and so wild in their attire, That look not like the inhabitants o' the earth, And yet are on't? Live you? or are you aught That man may question? You seem to understand me, By each at once her chappy finger laying Upon her skinny lips: you should be women, And yet your beards forbid me to interpret That you are so.	Speak, if you can: what are you?				1
+
+inout		The earth hath bubbles, as the water has, And these are of them. Whither are they vanish'd?	Into the air; and what seem'd corporal melted As breath into the wind. Would they had stay'd!				1
+
+inout		Were such things here as we do speak about? Or have we eaten on the insane root That takes the reason prisoner?	Your children shall be kings.				1
+
+inout		You shall be king.	And thane of Cawdor too: went it not so?				1
+
+inout		What, can the devil speak true?	The thane of Cawdor lives: why do you dress me In borrow'd robes?				1
+
+inout		Who was the thane lives yet; But under heavy judgment bears that life Which he deserves to lose. Whether he was combined With those of Norway, or did line the rebel With hidden help and vantage, or that with both He labour'd in his country's wreck, I know not; But treasons capital, confess'd and proved, Have overthrown him.	[Aside] Glamis, and thane of Cawdor! The greatest is behind.				1
+
+inout		That trusted home Might yet enkindle you unto the crown, Besides the thane of Cawdor. But 'tis strange: And oftentimes, to win us to our harm, The instruments of darkness tell us truths, Win us with honest trifles, to betray's In deepest consequence. Cousins, a word, I pray you.	[Aside] Two truths are told, As happy prologues to the swelling act Of the imperial theme.--I thank you, gentlemen.				1
+
+inout		Look, how our partner's rapt.	[Aside] If chance will have me king, why, chance may crown me, Without my stir.				1
+
+inout		New horrors come upon him, Like our strange garments, cleave not to their mould But with the aid of use.	[Aside] Come what come may, Time and the hour runs through the roughest day.				1
+
+inout		Worthy Macbeth, we stay upon your leisure.	Give me your favour: my dull brain was wrought With things forgotten. Kind gentlemen, your pains Are register'd where every day I turn The leaf to read them. Let us toward the king. Think upon what hath chanced, and, at more time, The interim having weigh'd it, let us speak Our free hearts each to other.				1
+
+inout		Very gladly.	Till then, enough. Come, friends.				1
+
+inout		My plenteous joys, Wanton in fulness, seek to hide themselves In drops of sorrow. Sons, kinsmen, thanes, And you whose places are the nearest, know We will establish our estate upon Our eldest, Malcolm, whom we name hereafter The Prince of Cumberland; which honour must Not unaccompanied invest him only, But signs of nobleness, like stars, shall shine On all deservers. From hence to Inverness, And bind us further to you.	The rest is labour, which is not used for you: I'll be myself the harbinger and make joyful The hearing of my wife with your approach; So humbly take my leave.				1
+
+inout		My worthy Cawdor!	[Aside] The Prince of Cumberland! that is a step On which I must fall down, or else o'erleap, For in my way it lies. Stars, hide your fires; Let not light see my black and deep desires: The eye wink at the hand; yet let that be, Which the eye fears, when it is done, to see.				1
+
+inout		What, sir, not yet at rest? The king's a-bed: He hath been in unusual pleasure, and Sent forth great largess to your offices. This diamond he greets your wife withal, By the name of most kind hostess; and shut up In measureless content.	Being unprepared, Our will became the servant to defect; Which else should free have wrought.				1
+
+inout		All's well. I dreamt last night of the three weird sisters: To you they have show'd some truth.	I think not of them: Yet, when we can entreat an hour to serve, We would spend it in some words upon that business, If you would grant the time.				1
+
+inout		At your kind'st leisure.	If you shall cleave to my consent, when 'tis, It shall make honour for you.				1
+
+inout		So I lose none In seeking to augment it, but still keep My bosom franchised and allegiance clear, I shall be counsell'd.	Good repose the while!				1
+
+inout		Good morrow, noble sir.	Good morrow, both.				1
+
+inout		Is the king stirring, worthy thane?	Not yet.				1
+
+inout		He did command me to call timely on him: I have almost slipp'd the hour.	I'll bring you to him.				1
+
+inout		I know this is a joyful trouble to you; But yet 'tis one.	The labour we delight in physics pain. This is the door.				1
+
+inout		Goes the king hence to-day?	He does: he did appoint so.				1
+
+inout		The night has been unruly: where we lay, Our chimneys were blown down; and, as they say, Lamentings heard i' the air; strange screams of death, And prophesying with accents terrible Of dire combustion and confused events New hatch'd to the woeful time: the obscure bird Clamour'd the livelong night: some say, the earth Was feverous and did shake.	'Twas a rough night.				1
+
+inout		Confusion now hath made his masterpiece! Most sacrilegious murder hath broke ope The Lord's anointed temple, and stole thence The life o' the building!	What is 't you say? the life?				1
+
+inout		What is amiss?	You are, and do not know't: The spring, the head, the fountain of your blood Is stopp'd; the very source of it is stopp'd.				1
+
+inout		Those of his chamber, as it seem'd, had done 't: Their hands and faces were an badged with blood; So were their daggers, which unwiped we found Upon their pillows: They stared, and were distracted; no man's life Was to be trusted with them.	O, yet I do repent me of my fury, That I did kill them.				1
+
+inout		Wherefore did you so?	Who can be wise, amazed, temperate and furious, Loyal and neutral, in a moment? No man: The expedition my violent love Outrun the pauser, reason. Here lay Duncan, His silver skin laced with his golden blood; And his gash'd stabs look'd like a breach in nature For ruin's wasteful entrance: there, the murderers, Steep'd in the colours of their trade, their daggers Unmannerly breech'd with gore: who could refrain, That had a heart to love, and in that heart Courage to make 's love kno wn?				1
+
+inout		So all.	Let's briefly put on manly readiness, And meet i' the hall together.				1
+
+inout		Let your highness Command upon me; to the which my duties Are with a most indissoluble tie For ever knit.	Ride you this afternoon?				1
+
+inout		Ay, my good lord.	We should have else desired your good advice, Which still hath been both grave and prosperous, In this day's council; but we'll take to-morrow. Is't far you ride?				1
+
+inout		As far, my lord, as will fill up the time 'Twixt this and supper: go not my horse the better, I must become a borrower of the night For a dark hour or twain.	Fail not our feast.				1
+
+inout		My lord, I will not.	We hear, our bloody cousins are bestow'd In England and in Ireland, not confessing Their cruel parricide, filling their hearers With strange invention: but of that to-morrow, When therewithal we shall have cause of state Craving us jointly. Hie you to horse: adieu, Till you return at night. Goes Fleance with you?				1
+
+inout		Ay, my good lord: our time does call upon 's.	I wish your horses swift and sure of foot; And so I do commend you to their backs. Farewell.				1
+
+inout		They are, my lord, without the palace gate.	Bring them before us.				1
+
+inout		Thanks to your majesty.	Ourself will mingle with society, And play the humble host. Our hostess keeps her state, but in best time We will require her welcome.				1
+
+inout		His absence, sir, Lays blame upon his promise. Please't your highness To grace us with your royal company.	The table's full.				1
+
+inout		Here is a place reserved, sir.	Where?				1
+
+inout		Here, my good lord. What is't that moves your highness?	Which of you have done this?				1
+
+inout		What, my good lord?	Thou canst not say I did it: never shake Thy gory locks at me.				1
+
+inout		A deed without a name.	I conjure you, by that which you profess, Howe'er you come to know it, answer me: Though you untie the winds and let them fight Against the churches; though the yesty waves Confound and swallow navigation up; Though bladed corn be lodged and trees blown down; Though castles topple on their warders' heads; Though palaces and pyramids do slope Their heads to their foundations; though the treasure Of nature's germens tumble all together, Even till destruction sicken; answer me To what I ask you.				1
+
+inout		Seek to know no more.	I will be satisfied: deny me this, And an eternal curse fall on you! Let me know. Why sinks that cauldron? and what noise is this?				1
+
+inout		What's your grace's will?	Saw you the weird sisters?				1
+
+inout		No, my lord.	Came they not by you?				1
+
+inout		No, indeed, my lord.	Infected be the air whereon they ride; And damn'd all those that trust them! I did hear The galloping of horse: who was't came by?				1
+
+inout		'Tis two or three, my lord, that bring you word Macduff is fled to England.	Fled to England!				1
+
+inout		Ay, my good lord.	Time, thou anticipatest my dread exploits: The flighty purpose never is o'ertook Unless the deed go with it; from this moment The very firstlings of my heart shall be The firstlings of my hand. And even now, To crown my thoughts with acts, be it thought and done: The castle of Macduff I will surprise; Seize upon Fife; give to the edge o' the sword His wife, his babes, and all unfortunate souls That trace him in his line. No boasting like a fool; This deed I'll do before this purpose cool. But no more sights!--Where are these gentlemen? Come, bring me where they are.				1
+
+inout		There is ten thousand--	Geese, villain!				1
+
+inout		Soldiers, sir.	Go prick thy face, and over-red thy fear, Thou lily-liver'd boy. What soldiers, patch? Death of thy soul! those linen cheeks of thine Are counsellors to fear. What soldiers, whey-face?				1
+
+inout		The English force, so please you.	Take thy face hence.				1
+
+inout		What is your gracious pleasure?	What news more?				1
+
+inout		All is confirm'd, my lord, which was reported.	I'll fight till from my bones my flesh be hack'd. Give me my armour.				1
+
+inout		'Tis not needed yet.	I'll put it on. Send out more horses; skirr the country round; Hang those that talk of fear. Give me mine armour. How does your patient, doctor?				1
+
+inout		Not so sick, my lord, As she is troubled with thick coming fancies, That keep her from her rest.	Cure her of that. Canst thou not minister to a mind diseased, Pluck from the memory a rooted sorrow, Raze out the written troubles of the brain And with some sweet oblivious antidote Cleanse the stuff'd bosom of that perilous stuff Which weighs upon the heart?				1
+
+inout		Therein the patient Must minister to himself.	Throw physic to the dogs; I'll none of it. Come, put mine armour on; give me my staff. Seyton, send out. Doctor, the thanes fly from me. Come, sir, dispatch. If thou couldst, doctor, cast The water of my land, find her disease, And purge it to a sound and pristine health, I would applaud thee to the very echo, That should applaud again.--Pull't off, I say.-- What rhubarb, cyme, or what purgative drug, Would scour these English hence? Hear'st thou of them?				1
+
+inout		Ay, my good lord; your royal preparation Makes us hear something.	Bring it after me. I will not be afraid of death and bane, Till Birnam forest come to Dunsinane.				1
+
+inout		The queen, my lord, is dead.	She should have died hereafter; There would have been a time for such a word. To-morrow, and to-morrow, and to-morrow, Creeps in this petty pace from day to day To the last syllable of recorded time, And all our yesterdays have lighted fools The way to dusty death. Out, out, brief candle! Life's but a walking shadow, a poor player That struts and frets his hour upon the stage And then is heard no more: it is a tale Told by an idiot, full of sound and fury, Signifying nothing.				1
+
+inout		Gracious my lord, I should report that which I say I saw, But know not how to do it.	Well, say, sir.				1
+
+inout		As I did stand my watch upon the hill, I look'd toward Birnam, and anon, methought, The wood began to move.	Liar and slave!				1
+
+inout		Let me endure your wrath, if't be not so: Within this three mile may you see it coming; I say, a moving grove.	If thou speak'st false, Upon the next tree shalt thou hang alive, Till famine cling thee: if thy speech be sooth, I care not if thou dost for me as much. I pull in resolution, and begin To doubt the equivocation of the fiend That lies like truth: 'Fear not, till Birnam wood Do come to Dunsinane:' and now a wood Comes toward Dunsinane. Arm, arm, and out! If this which he avouches does appear, There is nor flying hence nor tarrying here. I gin to be aweary of the sun, And wish the estate o' the world were now undone. Ring the alarum-bell! Blow, wind! come, wrack! At least we'll die with harness on our back.				1
+
+inout		Turn, hell-hound, turn!	Of all men else I have avoided thee: But get thee back; my soul is too much charged With blood of thine already.				1
+
+inout		Despair thy charm; And let the angel whom thou still hast served Tell thee, Macduff was from his mother's womb Untimely ripp'd.	Accursed be that tongue that tells me so, For it hath cow'd my better part of man! And be these juggling fiends no more believed, That palter with us in a double sense; That keep the word of promise to our ear, And break it to our hope. I'll not fight with thee.				1
+
+inout		Then yield thee, coward, And live to be the show and gaze o' the time: We'll have thee, as our rarer monsters are, Painted on a pole, and underwrit, 'Here may you see the tyrant.'	I will not yield, To kiss the ground before young Malcolm's feet, And to be baited with the rabble's curse. Though Birnam wood be come to Dunsinane, And thou opposed, being of no woman born, Yet I will try the last. Before my body I throw my warlike shield. Lay on, Macduff, And damn'd be him that first cries, 'Hold, enough!'				1
+
+inout		Anything!	Forsooth				0
+

@@ -6,6 +6,8 @@ import socket
 import os
 import sys
 
+from flask import request
+
 from FlaskWebProject import app
 #from flask import Flask
 #app = Flask(__name__)
@@ -21,8 +23,7 @@ def save_to_file(stt):
     t = generate(stt, markovM, linesM)
     get_audio(t)
     sock = socket.socket()
-    return t
-    sock.connect(('10.122.1.22', 115))
+    sock.connect((request.remote_addr, 80))
     sock.send(open(AUDIO_FILENAME, 'rb').read())
     sock.close()
     return t

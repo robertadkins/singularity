@@ -19,10 +19,9 @@ def save_to_file(stt):
     markovM = gen_markov(linesM.values())
 
     t = generate(stt, markovM, linesM)
-    print >> sys.stderr, t
     get_audio(t)
     sock = socket.socket()
-    print >> sys.stderr, "made it here!"
+    return t
     sock.connect(('10.122.1.22', 33333))
     sock.send(open(AUDIO_FILENAME, 'rb').read())
     sock.close()

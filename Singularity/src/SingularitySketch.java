@@ -151,8 +151,8 @@ public class SingularitySketch extends PApplet {
 //			hand.drawSphere();
 		    
 		    if(first) {
-		    	if(prevHandPosition != null) {
-		    		headAngleYAdj += (hand_position.x - prevHandPosition.x)/50.0f;
+		    	if(prevHandPosition != null && hand_position.z > 50) {
+		    		headAngleYAdj += (hand_position.x - prevHandPosition.x)/100.0f;
 		    		if (!switched && abs(headAngleYAdj) > PI) {
 		    			switched = true;
 		    			personality++;		//Switch AI personality!

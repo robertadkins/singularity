@@ -36,10 +36,14 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="kinect/ufdw.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Singularity/kinect/windows64"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/GitHub/singularity/Singularity/kinect/windows64"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="library/opencv-2411.jar"/>
+	<classpathentry kind="lib" path="library/opencv-2411.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Windows/System32"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV-2.4.9"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

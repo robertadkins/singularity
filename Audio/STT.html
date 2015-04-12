@@ -3,7 +3,9 @@
     <head>
         <title>Singularity</title>
         <script type="text/javascript">
-            var recognition = new webkitSpeechRecognition({continuous:true});
+            var recognition = new webkitSpeechRecognition();
+            //recognition.continuous = true;
+            //recognition.interimResults = true;
             recognition.onresult = function(event) {
                 for (var i=0; i < event.results.length; i++) {
                     console.log(event.results[i][0].transcript);
@@ -16,15 +18,80 @@
                     
                     var xmlhttp = new XMLHttpRequest();
                     
+                    var faceHost = "http://127.0.0.1:5556";
+                    var otherReq = new XMLHttpRequest();
+                    otherReq.open("GET",faceHost,true);
+                    otherReq.send(null);
+                    
                     xmlhttp.open("GET",host,true);
                     xmlhttp.send(null);
                 }
             }
             recognition.start();
         </script>
+        <link rel="stylesheet" href="STT.css" type="text/css"/>
     </head>
-    
     <body>
-        <p id="recognition_result"></p>
+        <h1><center> <img src="singularity-logo.gif" alt="Singularity"></center></h1>
+        
+        Ask Something: <button type="button">RECORD</button><br><br>
+        <div>      
+            <!--Just a sample conversation.-->
+            Oh hey.<br>
+            <b>How are you?</b><br>
+            I'm good<br>
+            <b>That's swell</b><br>
+            What's your name?<br>
+            <b>MICHAEL ROSEN.</b><br>
+            OH MY FUCKING GOD<br>
+            <b>I know.</b><br>
+            Can you rap to me?<br>
+            <b>You may think I'm happy<br>
+You may think I'm sad<br>
+You may think I'm crazy<br>
+You may think I'm mad<br>
+But hang on to your seats and listen right here<br>
+I'm gonna tell you something that'll burn your ear<br><br>
+
+Hip, hop, the hip hop hap<br>
+I'm giving you all the Michael Rosen Rap<br><br>
+
+I was born on the 7th of May<br>
+I remember very well that awful day<br>
+I was in my mother, curled up tight<br>
+Though I have to say it was as dark as night<br>
+Nothing to do, didn't want to breathe<br>
+I was so happy didn't want to leave!<br><br>
+
+Then I hear some people give a shout:<br>
+One push, Mrs. Rosen, and he'll be out!<br>
+I'm tellin' you, that was a puzzle to me!<br>
+I shouted out: "How'd you know I'm a he?"<br>
+The doctor shouted "Good Lord, he can talk!"<br>
+I popped out my head and said, "Now watch me walk."<br>
+I juked and jived around that room<br>
+Balam bam boola, balam de ditty boom<br><br>
+
+Hip, hop, the hip hop hap<br>
+I'm giving you all the Michael Rosen Rap<br><br>
+
+When I was one, I swam the English Channel<br>
+When I was two, I ate a soapy flannel<br>
+When I was three, I started getting thinner<br>
+When I was four, I ate the dog's dinner!<br>
+When I was five, I was in a band playing drums<br>
+When I was six, I ate a bag of plums!<br>
+When I was seven, I robbed a bank with my sister<br>
+When I was eight, I became Prime Minister!<br>
+When I was nine, I closed all the schools<br>
+When I was ten, they made me King of the Fools<br><br>
+
+
+Hip, hop, the hip hop hap<br>
+I'm giving you all the Michael Rosen Rap</b><br>
+        </div>    
+        <p id="application">
+        <!--This is where the face goes-->
+        </p>
     </body>
 </html>

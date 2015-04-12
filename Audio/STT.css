@@ -1,0 +1,31 @@
+div {
+    width: 400px;
+    height: 600px;
+    border: 1px solid white;
+    overflow-y: auto;
+    float: left;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-family: BankGothic Lt Bt, serif;
+    font-size: 50px;
+}
+
+#application {
+    float: right;
+    width: 1300px;
+    margin-right: 100px;
+    text-align: center;
+}
+
+button {
+    color: whitesmoke;
+    background-color: crimson;
+    border: solid red;
+}

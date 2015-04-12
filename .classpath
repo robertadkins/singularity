@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="AI"/>
+	<classpathentry kind="src" path="PlayAudio/src"/>
+	<classpathentry kind="src" path="Singularity/src"/>
+	<classpathentry kind="src" path="WriteText/src"/>
+	<classpathentry kind="lib" path="PlayAudio/jmf.jar"/>
+	<classpathentry kind="lib" path="PlayAudio/mp3plugin.jar"/>
+	<classpathentry kind="lib" path="Singularity/leap_processing/LeapJava.jar"/>
+	<classpathentry kind="lib" path="Singularity/leap_processing/LeapMotionForProcessing.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/core.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/gluegen-rt-natives-linux-armv6hf.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/gluegen-rt-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/jl1.0.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/jogl-all-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/jogl-all-natives-linux-armv6hf.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/jogl-all-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/jogl-all.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/jsminim.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/minim.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/opencv-2411.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/tritonus_aos.jar"/>
+	<classpathentry kind="lib" path="Singularity/library/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="WriteText/core.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="WriteText/bin"/>
+</classpath>

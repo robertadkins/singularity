@@ -26,6 +26,8 @@ public class SingularitySketch extends PApplet {
 	private float DAMP = 0.6f;
 	private float HEAD_ANGLE_RANGE = PI / 8;
 	private float EYE_ANGLE_RANGE = PI / 5;
+	
+	boolean shouldSpeak;
 
 	Minim minim;
 	AudioPlayer player;
@@ -59,6 +61,7 @@ public class SingularitySketch extends PApplet {
 		// heads[4] = loadShape("short_i.obj");
 		//heads[4] = loadShape("ychj.obj");
 		counter = 0;
+		shouldSpeak = false;
 
 		eye = loadShape("my_eye.obj");
 

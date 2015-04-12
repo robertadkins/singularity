@@ -51,13 +51,13 @@ public class SingularitySketch extends PApplet {
 
 	public void setup() {
 		size(1200, 900, P3D);
-		heads = new PShape[5];
+		heads = new PShape[4];
 		heads[0] = loadShape("my_model.obj");
 		heads[1] = loadShape("eee.obj");
 		heads[2] = loadShape("erh.obj");
 		heads[3] = loadShape("oh.obj");
 		// heads[4] = loadShape("short_i.obj");
-		heads[4] = loadShape("ychj.obj");
+		//heads[4] = loadShape("ychj.obj");
 		counter = 0;
 
 		eye = loadShape("my_eye.obj");
@@ -110,7 +110,7 @@ public class SingularitySketch extends PApplet {
 		rotateX(headAngleX);
 		rotateY(headAngleY);
 		rotateZ(PI);
-		shape(heads[(counter / 10) % heads.length]);
+		shape(heads[(counter / 2) % heads.length]);
 		counter++;
 
 		dx = prevX - targetX;
@@ -234,14 +234,11 @@ public class SingularitySketch extends PApplet {
 					int read = 0;
 					BufferedOutputStream toFile = new BufferedOutputStream(new FileOutputStream(out));
 					while ((read = in.read(data)) != -1) {
+						System.out.println("DATA: " + data);
 						toFile.write(data, 0, read);
 						toFile.flush();
 					}
 					toFile.close();
-					
-					/*AudioInputStream audStream = AudioSystem.getAudioInputStream(snake.getInputStream());
-					AudioSystem.write(audStream, AudioFileFormat.Type.WAVE, out);
-					audStream.close();*/
 					player = minim.loadFile("data/audio.wav");
 					player.play();
 
